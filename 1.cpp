@@ -4,7 +4,12 @@ using namespace std;
 
 int main() {
 
-    string a = "GTTC", t = "GGGTTCTA";
+    ifstream fin;
+    string a = "fgh", t;
+    fin.open("1.txt");
+    getline(fin, t);
+    fin.close();
+    
     int n = t.size(), m = a.size();
     int D[m+1][n+1];
     for(int i=0;i<=n;i++) D[0][i] = 0;
