@@ -23,38 +23,22 @@ int main() {
     #pragma omp parallel num_threads(NUM_THREADS) private(tid,start,end) shared(t,a,remainder,partSize,m)
     {
         tid=omp_get_thread_num();
-  
+        long long j;
+
         if(tid == 0) {
-            #pragma omp critical (part1)
-            {
-                long long j;
-                start = tid;
-                end = partSize - 1;
-                for(long long i=start;i<=end-m;i++) {
-                    for(j=0;j<m;j++)
-                        if(t[i+j] != a[j])
-                            break;
-                    if(j == m) {
-                        #pragma omp critical
-                            v.push_back(i);
-                    }
-                }
-            }
+            start = tid;
+            end = partSize - 1;
         } else {
-            #pragma omp critical (part2)
-            {
-                long long j;
-                start = (tid * partSize) - m;
-                end = (tid * partSize) + partSize - 1;
-                for(long long i=start;i<=end-m;i++) {
-                    for(j=0;j<m;j++)
-                        if(t[i+j] != a[j])
-                            break;
-                    if(j == m) {
-                        #pragma omp critical
-                            v.push_back(i);
-                    }
-                }
+            start = (tid * partSize) - m;
+            end = (tid * partSize) + partSize - 1;
+        }
+        for(long long i=start;i<=end-m;i++) {
+            for(j=0;j<m;j++)
+                if(t[i+j] != a[j])
+                    break;
+            if(j == m) {
+                #pragma omp critical
+                    v.push_back(i);
             }
         }
     }
