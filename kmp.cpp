@@ -3,13 +3,13 @@
 
 using namespace std;
 
-void computeLPSArray(char* pat, int M, int* lps) 
+void computeLPSArray(string pat, int M, int* lps) 
 { 
     int len = 0; 
     lps[0] = 0; 
     int i = 1; 
 
-    while (i < M) { 
+    while (i < M) {
         if (pat[i] == pat[len]) { 
             len++; 
             lps[i] = len; 
@@ -28,10 +28,10 @@ void computeLPSArray(char* pat, int M, int* lps)
     } 
 } 
 
-void KMPSearch(char* pat, char* txt) 
+void KMPSearch(string pat, string txt) 
 { 
-    int M = strlen(pat); 
-    int N = strlen(txt); 
+    int M = pat.size(); 
+    int N = txt.size(); 
     int lps[M]; 
   
     computeLPSArray(pat, M, lps); 
@@ -60,17 +60,19 @@ void KMPSearch(char* pat, char* txt)
 
 int main() {
 
-    // ifstream fin;
-    // string a = "fgh", t;
-    // fin.open("1.txt");
-    // getline(fin, t);
-    // fin.close();
-    char a[] = "fgh",t[] = "abcdefghfgh";
-    //int n = t.size(), m = a.size();
-    
+    ifstream fin;
+    string a, t;
+    fin.open("2.txt");
+    getline(fin, t);
+    fin.close();
+
+    cin>>a;
+
+    int n = t.size(), m = a.size();
+
     clock_t ct = clock();
     KMPSearch(a,t);
     ct = clock() - ct;
-    cout << (double)(((double)ct)/CLOCKS_PER_SEC) << endl;
+    cout <<"Time: " <<(double)(((double)ct)/CLOCKS_PER_SEC) << endl;
     return 0;
 }
