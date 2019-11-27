@@ -32,7 +32,7 @@ int main() {
 
     for(int l=0;l<n;l++) {
         if(D[m-1][l])        
-            index.push_back(i);
+            index.push_back(l);
     }
 
     for(auto it : index) {
