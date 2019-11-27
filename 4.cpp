@@ -9,13 +9,17 @@ vector<int> v;
 
 int main() {
     ifstream fin;
-    string a = "fgh", t;
+    string a, t;
     fin.open("1.txt");
     getline(fin, t);
     fin.close();
     
+    cin>>a;
+
     int n = t.size(), m = a.size();
     vector<int> check(n, 1);
+
+    double start = omp_get_wtime();
 
     #pragma omp parallel for
     for(long long i=0;i<n*m;i++) {
@@ -34,10 +38,14 @@ int main() {
         }
     }
 
+    double end = omp_get_wtime();
+
     for(auto it : v) {
         cout<<it<<" ";
     }
     cout<<"\n";
 
+    cout<<"Time: "<<end-start<<"\n";
+    
     return 0;
 }

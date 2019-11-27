@@ -6,15 +6,29 @@ using namespace std;
 int main() {
 
     ifstream fin;
-    string a = "fgh", t;
+    string a, t;
     fin.open("1.txt");
     getline(fin, t);
     fin.close();
 
+    cin>>a;
+
     int n = t.size(), m = a.size();
     int D[m+1][n+1];
-    for(int i=0;i<=n;i++) D[0][i] = 0;
-    for(int i=0;i<=m;i++) D[i][0] = i;
+    vector<int> index;
+
+
+    double start = omp_get_wtime();
+
+    #pragma omp parallel for
+    for(int i=0;i<=n;i++) {
+        D[0][i] = 0;
+    }
+
+    #pragma omp parallel for
+    for(int i=0;i<=m;i++) {
+        D[i][0] = i;
+    }
 
     for(int i=1;i<=m;i++) {
         #pragma omp parallel for
@@ -32,7 +46,7 @@ int main() {
         }
     }
 
-    vector<int> index;
+    double end = omp_get_wtime();
 
     #pragma omp parallel for
     for(int i=m;i<=n;i++) {
@@ -46,6 +60,8 @@ int main() {
         cout<<it<<" ";
     }
     cout<<"\n";
+
+    cout<<"Time: "<<end-start<<"\n";
 
     return 0;
 }

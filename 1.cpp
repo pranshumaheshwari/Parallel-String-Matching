@@ -1,17 +1,24 @@
 #include<bits/stdc++.h>
+#include<omp.h>
 
 using namespace std;
 
 int main() {
 
     ifstream fin;
-    string a = "fgh", t;
+    string a, t;
     fin.open("1.txt");
     getline(fin, t);
     fin.close();
     
+    cin>>a;
+
     int n = t.size(), m = a.size();
     int D[m+1][n+1];
+    vector<int> v;
+
+    double start = omp_get_wtime();
+
     for(int i=0;i<=n;i++) D[0][i] = 0;
     for(int i=0;i<=m;i++) D[i][0] = i;
 
@@ -22,12 +29,20 @@ int main() {
         }
     }
 
-    for(int i=0;i<=m;i++) {
-        for(int l=0;l<=n;l++) {
-            cout<<D[i][l]<<" ";
+    double end = omp_get_wtime();
+
+    for(int l=0;l<=n;l++) {
+        if(!D[m][l]) {
+            v.push_back(l);
         }
-        cout<<"\n";
     }
+
+    for(auto it : v) {
+        cout<<it<<" ";
+    }
+    cout<<"\n";
+
+    cout<<"Time: "<<end-start<<"\n";
 
     return 0;
 }

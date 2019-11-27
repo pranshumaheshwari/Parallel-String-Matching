@@ -5,13 +5,17 @@ using namespace std;
 
 int main() {
     ifstream fin;
-    string a = "fgh", t;
+    string a, t;
     fin.open("1.txt");
     getline(fin, t);
     fin.close();
-    
+
+    cin>>a;
+
     int n = t.size(), m = a.size();
     vector<int> index;
+
+    double start = omp_get_wtime();
 
     for(long long i=0;i<=n-m;i++) {
         int j;
@@ -22,10 +26,14 @@ int main() {
             index.push_back(i);
     }
 
+    double end = omp_get_wtime();
+    
     for(auto it : index) {
         cout<<it<<" ";
     }
     cout<<"\n";
+
+    cout<<"Time: "<<end-start<<"\n";
 
     return 0;
 }

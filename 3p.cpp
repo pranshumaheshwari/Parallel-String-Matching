@@ -9,16 +9,20 @@ vector<int> v;
 
 int main() {
     ifstream fin;
-    string a = "fgh", t;
+    string a, t;
     fin.open("1.txt");
     getline(fin, t);
     fin.close();
     
+    cin>>a;
+
     int n = t.size(), m = a.size();
     int tid, start, end;
 
     int partSize = n / NUM_THREADS;
     int remainder = n % NUM_THREADS;
+
+    double start = omp_get_wtime();
 
     #pragma omp parallel num_threads(NUM_THREADS) private(tid,start,end) shared(t,a,remainder,partSize,m)
     {
@@ -57,10 +61,14 @@ int main() {
         }
     }
 
+    double end = omp_get_wtime();
+
     for(auto it : v) {
         cout<<it<<" ";
     }
     cout<<"\n";
+
+    cout<<"Time: "<<end-start<<"\n";
 
     return 0;
 }
