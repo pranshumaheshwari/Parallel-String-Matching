@@ -15,7 +15,7 @@ int main() {
     fin.close();
     
     cin>>a;
-
+    omp_set_num_threads(NUM_THREADS);
     int n = t.size(), m = a.size();
     vector<int> check(n, 1);
 

@@ -1,6 +1,8 @@
 #include<bits/stdc++.h>
 #include<omp.h>
 
+#define NUM_THREADS 4
+
 using namespace std;
 
 int main() {
@@ -13,8 +15,12 @@ int main() {
 
     cin>>a;
     
+    omp_set_num_threads(NUM_THREADS);
     int n = t.size(), m = a.size();
-    int D[m][n];
+    int **D = new int*[m];
+    for(long long i=0;i<m;i++) {
+        D[i] = new int[n];
+    }
     vector<int> index;
 
     double start = omp_get_wtime();
@@ -40,7 +46,7 @@ int main() {
 
     for(int l=0;l<n;l++) {
         if(D[m-1][l])        
-            index.push_back(i);
+            index.push_back(l);
     }
 
 

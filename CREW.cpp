@@ -15,14 +15,15 @@ int main() {
     fin.close();
 
     cin>>a;
+    omp_set_num_threads(omp_get_max_threads());
 
     int n = t.size(), m = a.size();
     vector<vector<int> > check(m, vector<int>(n, 0));
-    int SUM[n];
+    int *SUM = new int[n];
 
     double start = omp_get_wtime();
 
-    #pragma omp parallel for
+    #pragma omp parallel for shared(a,t,check)
     for(long long i=0;i<n*m;i++) {
         int id = i / m;
         int j = i % m;
@@ -40,7 +41,7 @@ int main() {
         }
     }
 
-    #pragma omp parallel for
+    #pragma omp parallel for shared(m)
     for(int i=0;i<n;i++) {
         if(SUM[i] == m) {
             #pragma omp critical

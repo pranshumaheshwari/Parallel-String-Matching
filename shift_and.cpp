@@ -14,7 +14,10 @@ int main() {
     cin>>a;
 
     int n = t.size(), m = a.size();
-    int D[m][n];
+    int **D = new int*[m];
+    for(long long i=0;i<m;i++) {
+        D[i] = new int[n];
+    }
     vector<int> index;
 
     double start = omp_get_wtime();

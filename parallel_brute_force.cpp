@@ -22,7 +22,9 @@ int main() {
     int partSize = n / NUM_THREADS;
     int remainder = n % NUM_THREADS;
 
-    double start = omp_get_wtime();
+    omp_set_num_threads(NUM_THREADS);
+
+    double ts = omp_get_wtime();
 
     #pragma omp parallel num_threads(NUM_THREADS) private(tid,start,end) shared(t,a,remainder,partSize,m)
     {
@@ -61,14 +63,14 @@ int main() {
         }
     }
 
-    double end = omp_get_wtime();
+    double te = omp_get_wtime();
 
     for(auto it : v) {
         cout<<it<<" ";
     }
     cout<<"\n";
 
-    cout<<"Time: "<<end-start<<"\n";
+    cout<<"Time: "<<te-ts<<"\n";
 
     return 0;
 }
